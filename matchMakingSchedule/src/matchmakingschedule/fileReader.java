@@ -16,44 +16,54 @@ public class fileReader {
     String fName;
     String[] rawData;
     String[][] teamInfo;
+    String parkInfo;
+    String startDate;
+    String endDate;
+    String matchNum;
+
+
     public void getName(String name){
         fName=name;
         fName=name+".txt"; // got to make it so it checks to see if .txt is on it
     }
+
+
     public void fileRead(){
-        File dataFile=new File(fName);
+
         try{
-            if(dataFile.createNewFile()==true){ 
-                System.out.println("File is already there"); //delete me
-            }
-            else{                
-                System.out.println("File is not there"); //delete me
-            }
-            
-            Scanner arrayLength=new Scanner(fName);
+            File dataFile=new File(fName);
+            System.out.println(dataFile);
+            Scanner arrayLength=new Scanner(dataFile);
             int numLine=0;
-            while(arrayLength.hasNextLine()==true){
+
+            while(arrayLength.hasNextLine()){
                 numLine++;
                 arrayLength.nextLine();
             }
             arrayLength.close();
-            rawData=new String[numLine];
-            
-            Scanner storeData=new Scanner(fName);
+            System.out.println("The number of lines are: " + numLine);
+            rawData = new String[numLine];
+
+            Scanner storeData=new Scanner(dataFile);
             int count=0;
-            while(storeData.hasNextLine()==true){
+
+            while(storeData.hasNextLine()){
                 rawData[count]=storeData.nextLine();
                 count++;
             }
             storeData.close();
 
         }
-        catch(IOException e){
+        catch(FileNotFoundException e){
             System.out.println("Invalid File");
         }
-        finally{
+
+        for(int i = 0; i<13; i++) {
+            System.out.println(rawData[i]);
         }
+
     }
+
     public void sort(){
         int numTeam;
         String[] teamNum=new String[2];
@@ -96,10 +106,10 @@ public class fileReader {
             //System.out.println(lineStore[x]);
         }
         for(int x=0;x<numTeam;x++){
-           // System.out.println("changing line");
+            // System.out.println("changing line");
             System.out.println(splitter[x]+1);
             for(int y=0;y<splitter[x]+1;y++){
-               // System.out.println("Spot");
+                // System.out.println("Spot");
                 System.out.println(teamInfo[x][y]);
             }
         }
